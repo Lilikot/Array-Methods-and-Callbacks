@@ -115,23 +115,36 @@ Create a function called `getCountryWins` that takes the parameters `data` and `
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
-
-    /* code here */
-
+function getCountryWins(data, initial) {
+    // array of data which initial's won
+    const initials = data.filter(item => item["Home Team Initials"] === initial || item["Away Team Initials"] === initial)
+    const wins = initials.reduce((total, item) => {
+        if (item["Home Team Initials"] === initial && item["Home Team Goals"] > item["Away Team Goals"]){
+            return total + 1
+        } else if (item["Away Team Initials"] === initial && item["Away Team Goals"] > item["Home Team Goals"]){
+            return total + 1
+        }
+        return total
+    },0)
+    return wins;
 }
-
+console.log("Stretch 1" ,getCountryWins(fifaData,"KOR"))
 
 
 /* 💪💪💪💪💪 Stretch 2: 💪💪💪💪💪 
 Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
-function getGoals(/* code here */) {
-
-    /* code here */
-
+function getGoals(data) {
+    const goals = data.filter(item => {
+        if (item["Home Team Goals"] < item["Away Team Goals"]){
+            return item["Away Team Goals"], item["Away Team Name"]
+        } else if (item["Home Team Goals"] > item["Away Team Goals"]){
+            return item["Home Team Goals"], item["Home Team Name"]
+        }
+    });
+    return goals
 }
-
+console.log("Stretch 2" , getGoals(fifaData))
 
 /* 💪💪💪💪💪 Stretch 3: 💪💪💪💪💪
 Write a function called badDefense() that accepts a parameter `data` and calculates the team with the most goals scored against them per appearance (average goals against) in the World Cup finals */
